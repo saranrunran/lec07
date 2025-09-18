@@ -81,8 +81,30 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.listen(port, () => {
- console.log(`Server running on http://localhost:${port}`);
+ console.log(`🚀 Server running on http://localhost:${port}`);
 });
+```
+
+---
+
+### Running scripts
+
+Run app in development mode (from `src` directory)
+
+```bash
+pnpm run dev
+```
+
+Build app from `src` and output to `dist` directory
+
+```bash
+pnpm run build
+```
+
+Run app in production mode (from `dist` directory)
+
+```bash
+pnpm run serve
 ```
 
 ---
