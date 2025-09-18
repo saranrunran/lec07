@@ -111,3 +111,8 @@ This should be enough for our Express project setup
 ### Database (variables)
 
  - [src/db/db.ts](https://github.com/cpe207-staff/lecture16-2568-done/blob/main/src/db/db.ts)
+
+### Zod validators (for HTTP request validation)
+
+- [src/libs/studentValidator.ts](https://github.com/cpe207-staff/lecture16-2568-done/blob/main/src/schemas/studentSchema.ts)
+- [src/libs/courseValidator.ts](https://github.com/cpe207-staff/lecture16-2568-done/blob/main/src/schemas/courseSchema.ts)
