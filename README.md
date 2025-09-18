@@ -2,19 +2,27 @@
 
 ### Create an Express + TypeScript project
 
+Create a project directory and go inside.
+
 ```bash
-// create a project directory and go inside
 mkdir lecture16
 cd lecture16
+```
 
-// initialize project using pnpm
-// this creates package.json and pnpm-lock.yaml
+Initialize project using `pnpm`. This creates `package.json` and `pnpm-lock.yaml` files inside your project directory.
+
+```bash
 pnpm init
+```
 
-// install runtime dependencies
+Install `Express` as runtime dependency.
+
+```bash
 pnpm add express
+```
+Install necessary development dependencies
 
-// install development dependencies
+```bash
 pnpm add -D typescript @types/node @types/express tsx nodemon
 ```
 
