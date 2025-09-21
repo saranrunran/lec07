@@ -46,21 +46,41 @@ Create `tsconfig.ts` to specify Typescript compiler (`tsc`)
 npx tsc --init
 ```
 
-Open and edit the `tsconfig.ts` file
+Open and edit the `tsconfig.ts` file **(update: 21/9/2025)**
 
 ```json
 {
-  ...
   "compilerOptions": {
-  "target": "esnext",
-  "module": "nodenext",
-  "strict": true,
-  "outDir": "./dist",
-  "rootDir": "./src"
+    /* Base Options: */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+
+    /* If transpiling with TypeScript: */
+    "module": "NodeNext",
+    "outDir": "dist",
+    "rootDir": "src",
+    "sourceMap": true,
+
+    /* If your code doesn't run in the DOM: */
+    "lib": ["es2022"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
 ```
+
+
 
 Open the `package.json` file and modify the **"type"** and **"scripts"** sections
 
@@ -79,10 +99,14 @@ Open the `package.json` file and modify the **"type"** and **"scripts"** section
 ## Simple Express App
 
 ```typescript
-import express, { Request, Response } from 'express';
+import express, { type Request, type Response } from 'express';
 
 const app = express();
 const port = 3000;
+
+// An Express middleware that parses request's payload
+// make the data available in 'req.body' object
+app.use(express.json()); 
 
 app.get('/', (req: Request, res: Response) => {
  res.send('Hello from Express with TypeScript!');
