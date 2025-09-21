@@ -168,5 +168,11 @@ This should be enough for our Express project setup
 
 ### Zod validators (for HTTP request validation)
 
+Install `zod` as a dependency
+
+```bash
+pnpm add zod
+```
+
 - [src/libs/studentValidator.ts](https://github.com/cpe207-staff/lecture16-2568-done/blob/main/src/schemas/studentSchema.ts)
 - [src/libs/courseValidator.ts](https://github.com/cpe207-staff/lecture16-2568-done/blob/main/src/schemas/courseSchema.ts)
