@@ -145,6 +145,15 @@ pnpm run serve
 
 When deploy an `Express` project on Vercel, make sure that you configure **Framework Settings** corresponding to your project setup.
 
+Modify the `index.ts` by add the following line of code at the bottom of the file
+
+```typescript
+...
+
+export default app
+
+```
+
 #### Framework Settings
 
 1. Framework Preset : `Express`
