@@ -96,7 +96,10 @@ Open the `package.json` file and modify the **"type"** and **"scripts"** section
   ...
 }
 ```
-## Simple Express App
+
+Create `.gitignore` file as [followed](https://gist.github.com/potikanond/c6208164225399cc988def28d189e87b)
+
+## Simple Express App (update)
 
 ```typescript
 import express, { type Request, type Response } from 'express';
