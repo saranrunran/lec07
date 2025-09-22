@@ -8,6 +8,19 @@ Please download `Insomnia` app an install in your PC. This a tool for testing yo
 
 ---
 
+### Content
+
+- How to create `Express + Typescript` project
+- Express app structure
+  - Route handlers
+  - `express.json()` middleware
+- How to create `/students` endpoint
+  - CRUD operation (`GET`, `POST`, `PUT`, `DELETE` methods)
+  - Extract request's `query parameters` using `request.query.{param_name}
+  - Extract request's `body` (JSON payload) using `request.body`
+
+---
+
 ### Create an Express + TypeScript project
 
 Create a project directory and go inside.
