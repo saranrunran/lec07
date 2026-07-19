@@ -115,6 +115,8 @@ This configurations tells `nodemon` to monitor `*.js`, `*.ts`, `*.json` inside t
 
 ## Simple Express App (update)
 
+Create an Express app in the `src/index.ts` file.
+
 ```typescript
 import express, { type Request, type Response } from 'express';
 
@@ -184,13 +186,88 @@ This should be enough for our Express project setup
 
 ## Codes templates
 
-### Interfaces (for data object)
- 
- - [src/libs/types.ts](https://github.com/cpe207-staff/lecture16-2568-done/blob/main/src/libs/types.ts)
+### Interfaces 
+
+Create `interfaces` as `type` for data object in `src/libs/types.ts`
+
+```typescript
+interface Student {
+  studentId: string;
+  firstName: string;
+  lastName: string;
+  program: "CPE" | "ISNE";
+  programId: 101 | 102;
+  courses?: number[];
+}
+export type { Student };
+
+interface Course {
+  courseId: number;
+  courseTitle: string;
+  instructors: string[];
+}
+export type { Course };
+```
 
 ### Database (variables)
 
- - [src/db/db.ts](https://github.com/cpe207-staff/lecture16-2568-done/blob/main/src/db/db.ts)
+Create a database (as variables) in `src/db/db.ts`
+
+```typescript
+import { type Student, type Course } from "@libs/types.js";
+export let students: Student[] = [
+  {
+    studentId: "650610001",
+    firstName: "Matt",
+    lastName: "Damon",
+    program: "CPE",
+    programId: 101,
+  },
+  {
+    studentId: "650610002",
+    firstName: "Cillian",
+    lastName: "Murphy",
+    program: "CPE",
+    programId: 101,
+    courses: [261207, 261497],
+  },
+  {
+    studentId: "650610003",
+    firstName: "Emily",
+    lastName: "Blunt",
+    program: "ISNE",
+    programId: 102,
+    courses: [269101, 261497],
+  },
+];
+
+export let courses: Course[] = [
+  {
+    courseId: 261207,
+    courseTitle: "Basic Computer Engineering Lab",
+    instructors: ["Dome", "Chanadda"],
+  },
+  {
+    courseId: 261497,
+    courseTitle: "Full Stack Development",
+    instructors: ["Dome", "Nirand", "Chanadda"],
+  },
+  {
+    courseId: 269101,
+    courseTitle: "Introduction to Information Systems and Network Engineering",
+    instructors: ["Kenneth Cosh"],
+  },
+];
+```
+
+### Import the database
+
+Next, imports the `database` and `types` to use with **route-handlers** in the `src/index.ts` file.
+
+```typescript
+import { students } from '@db/db.js';                         // import database
+import { type Student, type Course } from "@libs/types.js";   // import types
+```
 
 ### Zod validators (for HTTP request validation)
 
@@ -200,5 +277,40 @@ Install `zod` as a dependency
 pnpm add zod
 ```
 
+Create Zod validators:
 - [src/libs/studentValidator.ts](https://github.com/cpe207-staff/lecture16-2568-done/blob/main/src/schemas/studentSchema.ts)
 - [src/libs/courseValidator.ts](https://github.com/cpe207-staff/lecture16-2568-done/blob/main/src/schemas/courseSchema.ts)
+
+Import validators to use with **route-handlers** in the `src/index.ts` file.
+
+```typescript
+import {
+  zStudentDeleteBody,
+  zStudentPostBody,
+  zStudentPutBody,
+} from "@libs/studentValidator.js";
+```
+
+Use a `validator` with a **route-handler**, for example:
+
+```typescript
+// src/index.ts
+
+// POST /students, body = {new student data}
+// Add a new student
+app.post("/students", (req: Request, res: Response) => {
+  ...
+  const body = req.body as Student;
+
+  // validate req.body with predefined validator
+  const result = zStudentPostBody.safeParse(body);
+  if (!result.success) {
+    // Invalid data format
+    return res.json({
+      message: "Validation failed",
+      errors: result.error.issues[0]?.message,
+    });
+  }
+  ...
+}
+```
