@@ -164,7 +164,7 @@ pnpm run serve
 
 When deploy an `Express` project on Vercel, make sure that you configure **Framework Settings** corresponding to your project setup.
 
-Modify the `index.ts` by add the following line of code at the bottom of the file
+Modify the `src/index.ts` by add the following line of code at the bottom of the file
 
 ```typescript
 ...
@@ -172,13 +172,23 @@ Modify the `index.ts` by add the following line of code at the bottom of the fil
 export default app
 
 ```
+### Edit `package.json`
 
-#### Framework Settings
+Insert the following `KEY:VALUE` in the `package.json`
+
+```json
+  ...
+  "packageManager": "pnpm@<version>",   // version could be 11.13.0
+  ...
+```
+
+### Framework Settings
 
 1. Framework Preset : `Express`
-2. Build Command : `npx tsc`
+2. Build Command : `pnpm exec tsc && pnpm exec tsc-alias`
 3. Output Directory : `dist`
 4. Install Command : `pnpm install`
+5. Add `ENABLE_EXPERIMENTAL_COREPACK` environment variable : `1`
 
 This should be enough for our Express project setup
 
