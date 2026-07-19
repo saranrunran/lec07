@@ -26,8 +26,8 @@ Please download `Insomnia` app an install in your PC. This a tool for testing yo
 Create a project directory and go inside.
 
 ```bash
-mkdir lecture16
-cd lecture16
+mkdir <project_dir>
+cd <project_dir>
 ```
 
 Initialize project using `pnpm`. This creates `package.json` and `pnpm-lock.yaml` files inside your project directory.
@@ -36,15 +36,17 @@ Initialize project using `pnpm`. This creates `package.json` and `pnpm-lock.yaml
 pnpm init
 ```
 
-Install `Express` as runtime dependency.
+Install `Express` and other runtime dependency.
 
 ```bash
-pnpm add express
+pnpm i express cors helmet morgan debug
 ```
-Install necessary development dependencies
+Install TypeScript and othe necessary development dependencies
 
 ```bash
-pnpm add -D typescript @types/node @types/express tsx nodemon
+pnpm i –D typescript @tsconfig/node-lts @tsconfig/node-ts tsx tsc-alias
+pnpm i -D @types/node @types/express @types/cors @types/morgan @types/debug cross-env nodemon
+pnpm approve-builds
 ```
 
 Open the project with your code editor
@@ -53,64 +55,63 @@ Open the project with your code editor
 code .
 ```
 
-Create `tsconfig.ts` to specify Typescript compiler (`tsc`)
+### Create and Edit files
 
-```bash
-npx tsc --init
+Edit `package.json` in the `scripts` section:
+
+```json
+"scripts": {
+    "dev": "nodemon",
+    "build": "tsc && tsc-alias",
+    "start": "node ./dist/src/index.js"
+ }
 ```
 
-Open and edit the `tsconfig.ts` file **(update: 21/9/2025)**
+Create a `tsconfig.json` file as followed: **(update: 19/07/2026)**
 
 ```json
 {
+  "extends": [
+    "@tsconfig/node-lts/tsconfig.json",
+    "@tsconfig/node-ts/tsconfig.json"
+  ],
   "compilerOptions": {
-    /* Base Options: */
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "target": "es2022",
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "moduleDetection": "force",
-    "isolatedModules": true,
-    "verbatimModuleSyntax": true,
-
-    /* Strictness */
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
-
-    /* If transpiling with TypeScript: */
-    "module": "NodeNext",
-    "outDir": "dist",
-    "rootDir": "src",
-    "sourceMap": true,
-
-    /* If your code doesn't run in the DOM: */
-    "lib": ["es2022"]
+    "types": ["node"],
+    "rootDir": ".",
+    "outDir": "./dist",
+    "paths": {
+      "@src/*": ["./src/*"]
+    }
   },
-  "include": ["src/**/*"],
+  "include": ["./src/**/*"],
   "exclude": ["node_modules"]
 }
 ```
+**Note:** 
+- We use based configuration for Node.js project from the `@tsconfig/node-lts` and `@tsconfig/nodel-ts` packages.
+- We only overwrites what we need for this project.
 
+Create a `.gitignore` file as followed:
 
+```
+.env
+.env.test
+dist
+logs
+node_modules/
+```
 
-Open the `package.json` file and modify the **"type"** and **"scripts"** sections
+Create a `nodemon.json` file as followed:
 
 ```json
 {
-  ...
-  "type": "module",
-  "scripts": {
-  "dev": "npx nodemon --exec tsx src/index.ts",
-  "build": "npx tsc",
-  "serve": "node dist/index.js",
-  },
-  ...
+  "watch": ["src",".env"],
+  "ext": "js,ts,json",
+  "ignore": ["src/logs/*", "src/**/*.{spec,test}.ts"],
+  "exec": "tsx src/index.ts"
 }
 ```
-
-Create `.gitignore` file as [followed](https://gist.github.com/potikanond/c6208164225399cc988def28d189e87b)
+This configurations tells `nodemon` to monitor `*.js`, `*.ts`, `*.json` inside the `src` directory. If any of those files are changed, `nodemon` will restart the app automatically.
 
 ## Simple Express App (update)
 
