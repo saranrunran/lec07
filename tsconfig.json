@@ -7,8 +7,11 @@
   "compilerOptions": {
     // File Layout
     "rootDir": ".",
-    "outDir": "./dist","paths": {
-      "@src/*": ["./src/*"]
+    "outDir": "./dist",
+    "paths": {
+      "@src/*": ["./src/*"],
+      "@libs/*": ["./src/libs/*"],
+      "@db/*": ["./src/db/*"]
     },
 
     // Environment Settings
@@ -22,9 +25,9 @@
     // and npm install -D @types/node
 
     // Other Outputs
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
+    // "sourceMap": true,
+    // "declaration": true,
+    // "declarationMap": true,
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
@@ -41,7 +44,7 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false, //change from true to false as chat told me
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
